@@ -9,13 +9,14 @@
 </head>
 <body class="bg-light">
   <div id="app" class="container py-4">
-    <h1 class="mb-4 text-success">Walker Dashboard</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="text-success">Walker Dashboard</h1>
+      <button @click="logout" class="btn btn-outline-danger">Logout</button>
+    </div>
 
-    <!-- Alert messages -->
     <div v-if="message" class="alert alert-info">{{ message }}</div>
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
 
-    <!-- Walk requests list -->
     <div v-if="walks.length > 0" class="row">
       <div class="col-md-6 mb-4" v-for="walk in walks" :key="walk.request_id">
         <div class="card">
@@ -74,6 +75,23 @@
           }
         }
 
+        async function logout() {
+          try {
+            const response = await fetch('/api/users/logout', {
+              method: 'POST',
+              credentials: 'same-origin'
+            });
+            
+            if (response.ok) {
+              window.location.href = '/';
+            } else {
+              error.value = 'Logout failed';
+            }
+          } catch (err) {
+            error.value = 'Logout failed';
+          }
+        }
+
         onMounted(() => {
           loadWalkRequests();
         });
@@ -82,7 +100,8 @@
           walks,
           message,
           error,
-          applyToWalk
+          applyToWalk,
+          logout 
         };
       }
     }).mount('#app');
