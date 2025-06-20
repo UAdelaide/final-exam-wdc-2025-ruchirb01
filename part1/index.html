@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Walking Service</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            margin: 0;
+            padding: 10px;
+        }
+        
+        .blink {
+            animation: blink 0.5s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .urgent {
+            background: red;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        
+        .popup {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            background: yellow;
+            border: 2px solid black;
+            padding: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="urgent blink">URGENT! CALL NOW! 555-DOG-WALK! LIMITED TIME OFFER!</div>
+        <div class="popup blink">BOOK TODAY! 50% OFF!</div>
+        
+        <h1>DOG WALKING SERVICE - THE BEST IN TOWN - AWARD WINNING - PROFESSIONAL</h1>
+        
+        <p><strong>IMPORTANT NOTICE:</strong> We are the #1 rated dog walking service in the city with over 500 satisfied customers and 15 years of experience serving the community with dedication and excellence. Our team of certified professional dog walkers are available 24/7 for emergency services.</p>
+        
+        <h2 class="blink">DOG OF THE DAY - WINNER OF CUTEST DOG CONTEST</h2>
+        <img v-if="dogImage" :src="dogImage" style="width: 200px; height: 200px;">
+        <div v-if="!dogImage">Loading amazing dog picture...</div>
+        <p><strong>Name:</strong> {{ dogName }} <strong>Breed:</strong> {{ dogBreed }} <strong>Age:</strong> {{ dogAge }} years <strong>Special Skills:</strong> {{ dogSkills }}</p>
+        
+        <h2>NAVIGATION MENU - CHOOSE FROM OUR COMPREHENSIVE SERVICES</h2>
+        <button>HOME</button> <button>ABOUT US</button> <button>SERVICES</button> <button>PRICING</button> <button>CONTACT</button> <button>TESTIMONIALS</button> <button>FAQ</button> <button>BLOG</button> <button>GALLERY</button> <button>CAREERS</button> <button>PRESS</button> <button>PARTNERS</button> <button>LOCATIONS</button> <button>EMERGENCY</button> <button>INSURANCE</button> <button>TRAINING</button>
+        
+        <h2>OUR COMPREHENSIVE RANGE OF PREMIUM SERVICES</h2>
+        <ul>
+            <li><strong>BASIC WALKS:</strong> 30 minutes of professional walking service including GPS tracking and photo updates for only $25 per session with discounts available for multiple bookings</li>
+            <li><strong>PREMIUM WALKS:</strong> 60 minutes of enhanced walking with treats, water breaks, and detailed report for $45 per session including weekend availability</li>
+            <li><strong>DELUXE WALKS:</strong> 90 minutes of comprehensive care including grooming check, exercise, and playtime for $65 per session with certified handlers</li>
+            <li><strong>OVERNIGHT CARE:</strong> Complete overnight pet sitting services with feeding, walking, and companionship for $120 per night including emergency vet contact</li>
+            <li><strong>GROUP WALKS:</strong> Socialization walks with other friendly dogs in supervised groups for $35 per session with behavioral assessment included</li>
+            <li><strong>TRAINING WALKS:</strong> Professional training combined with exercise sessions for $55 per hour with certified trainers</li>
+            <li><strong>SPECIALTY SERVICES:</strong> Senior dog care, puppy walks, medication administration, and special needs care starting at $40 per session</li>
+        </ul>
+        
+        <h2>PRICING INFORMATION - COMPETITIVE RATES WITH EXCELLENT VALUE</h2>
+        <table border="1" style="width: 100%;">
+            <tr><th>Service Type</th><th>Duration</th><th>Price</th><th>Includes</th><th>Add-ons Available</th><th>Discounts</th></tr>
+            <tr><td>Basic Walk</td><td>30 min</td><td>$25</td><td>GPS tracking, photos</td><td>Treats, toys</td><td>10% off 5+ walks</td></tr>
+            <tr><td>Premium Walk</td><td>60 min</td><td>$45</td><td>All basic plus report</td><td>Grooming, training</td><td>15% off weekly</td></tr>
+            <tr><td>Deluxe Walk</td><td>90 min</td><td>$65</td><td>All premium plus playtime</td><td>Pickup/dropoff</td><td>20% off monthly</td></tr>
+            <tr><td>Group Walk</td><td>45 min</td><td>$35</td><td>Socialization, supervision</td><td>Individual attention</td><td>Group rates available</td></tr>
+            <tr><td>Training Walk</td><td>60 min</td><td>$55</td><td>Exercise plus training</td><td>Advanced commands</td><td>Package deals</td></tr>
+        </table>
+        
+        <h2>CUSTOMER TESTIMONIALS - READ WHAT OUR SATISFIED CLIENTS SAY</h2>
+        <p><strong>Sarah from Downtown:</strong> "Absolutely amazing service! My dog Max loves his daily walks and comes home tired and happy. The GPS tracking gives me peace of mind and the photos are adorable. I've been using this service for 2 years and couldn't be happier. Highly recommended to all dog owners!"</p>
+        <p><strong>Mike from Suburbs:</strong> "Professional, reliable, and caring. They treated my elderly dog Bella with such gentle care and even helped with her medication schedule. The detailed reports are fantastic and show they really care about each individual pet. Worth every penny!"</p>
+        <p><strong>Jennifer from City Center:</strong> "Emergency service was incredible when I had to work late. They responded within 30 minutes and took excellent care of my puppy Rocky. The staff is trained, insured, and genuinely loves animals. I trust them completely with my fur baby."</p>
+        
+        <h2>CONTACT INFORMATION AND BOOKING DETAILS</h2>
+        <p><strong>Phone:</strong> 555-DOG-WALK (Available 24/7 for emergencies)</p>
+        <p><strong>Email:</strong> info@dogwalking.com (Response within 2 hours)</p>
+        <p><strong>Website:</strong> www.dogwalking.com (Online booking available)</p>
+        <p><strong>Address:</strong> 123 Pet Street, Dog City, State 12345 (Free consultations)</p>
+        <p><strong>Emergency Line:</strong> 555-911-DOGS (For urgent pet care needs)</p>
+        
+        <h2>BOOKING FORM - SCHEDULE YOUR DOG'S PERFECT WALK TODAY</h2>
+        <form>
+            <p>Owner Name: <input type="text" placeholder="Enter your full legal name as it appears on ID"></p>
+            <p>Email Address: <input type="email" placeholder="Primary email for confirmations and updates"></p>
+            <p>Phone Number: <input type="tel" placeholder="Best contact number including area code"></p>
+            <p>Emergency Contact: <input type="text" placeholder="Name and phone of emergency contact person"></p>
+            <p>Dog Name: <input type="text" placeholder="Your dog's name and any nicknames"></p>
+            <p>Dog Breed: <input type="text" placeholder="Primary breed and any mix information"></p>
+            <p>Dog Age: <input type="number" placeholder="Age in years and months"></p>
+            <p>Dog Weight: <input type="number" placeholder="Current weight in pounds"></p>
+            <p>Vaccination Status: <input type="text" placeholder="Date of last vaccinations and vet info"></p>
+            <p>Special Instructions: <textarea rows="4" placeholder="Any special care instructions, medical needs, behavioral notes, favorite treats, walking preferences, or other important information about your pet"></textarea></p>
+            <p>Preferred Walker Gender: <select><option>No preference</option><option>Male</option><option>Female</option></select></p>
+            <p>Preferred Walk Time: <select><option>Morning (6-9 AM)</option><option>Late Morning (9-12 PM)</option><option>Early Afternoon (12-3 PM)</option><option>Late Afternoon (3-6 PM)</option><option>Evening (6-9 PM)</option></select></p>
+            <button type="submit">BOOK NOW - SECURE YOUR SPOT TODAY!</button>
+        </form>
+        
+        <h2 class="blink">SPECIAL OFFERS AND PROMOTIONS</h2>
+        <p><strong>NEW CUSTOMER SPECIAL:</strong> First walk FREE when you book a weekly package! <strong>REFER A FRIEND:</strong> Get $10 credit for each successful referral! <strong>SENIOR DISCOUNT:</strong> 15% off for customers over 65! <strong>MULTIPLE PET DISCOUNT:</strong> Save 20% when booking for 2+ dogs! <strong>LOYALTY PROGRAM:</strong> Earn points for every walk towards free services!</p>
+        
+        <p><small>Terms and conditions apply. All services subject to availability. Prices may change without notice. Cancellation policy: 24 hour notice required. Late cancellation fee may apply. Walker assignment subject to availability and matching. Additional fees for holidays and emergency services. Insurance coverage details available upon request. All dogs must be current on vaccinations. Behavioral assessment required for new clients. Service area restrictions apply. Weather policy: walks cancelled in severe weather conditions. Payment due at time of service unless pre-arranged. Tips appreciated but not required. Background checks performed on all staff. Bonded and insured for your protection.</small></p>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    dogImage: null,
+                    dogName: 'Champion Buddy',
+                    dogBreed: 'Golden Retriever Mix',
+                    dogAge: 4,
+                    dogSkills: 'Frisbee catching, swimming, therapy work'
+                }
+            },
+            async mounted() {
+                try {
+                    const response = await fetch('https://dog.ceo/api/breeds/image/random');
+                    const data = await response.json();
+                    this.dogImage = data.message;
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
