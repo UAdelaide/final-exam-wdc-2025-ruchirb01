@@ -33,6 +33,26 @@ router.get('/me', (req, res) => {
   res.json(req.session.user);
 });
 
+router.get('/my-dogs', async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: 'Not logged in' });
+    }
+
+    const [rows] = await db.query(`
+      SELECT dog_id, name, size
+      FROM Dogs
+      WHERE owner_id = ?
+      ORDER BY name
+    `, [req.session.user.user_id]);
+
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching user dogs:', error);
+    res.status(500).json({ error: 'Failed to fetch dogs' });
+  }
+});
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -47,7 +67,7 @@ router.post('/login', async (req, res) => {
     }
 
     const user = rows[0];
-    
+
     req.session.user = {
       user_id: user.user_id,
       username: user.username,
@@ -60,9 +80,9 @@ router.post('/login', async (req, res) => {
         console.error('Session save error:', err);
         return res.status(500).json({ error: 'Login failed' });
       }
-      
-      res.json({ 
-        message: 'Login successful', 
+
+      res.json({
+        message: 'Login successful',
         user: req.session.user,
         redirectTo: user.role === 'owner' ? '/owner-dashboard.html' : '/walker-dashboard.html'
       });
@@ -80,13 +100,13 @@ router.post('/logout', (req, res) => {
       console.error('Logout error:', err);
       return res.status(500).json({ error: 'Logout failed' });
     }
-    
-    res.clearCookie('connect.sid', { 
+
+    res.clearCookie('connect.sid', {
       path: '/',
       httpOnly: true,
       secure: false 
     });
-    
+
     console.log('User logged out successfully');
     res.json({ message: 'Logged out successfully' });
   });
